@@ -48,6 +48,7 @@ function Main() {
         {Object.keys(mark).map((key)=> {
           return (
             <Marker
+              key={key}
               position={{
                 lat: mark[key].geometry.location.lat(),
                 lng: mark[key].geometry.location.lng(),

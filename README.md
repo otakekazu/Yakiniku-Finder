@@ -36,12 +36,8 @@ https://console.cloud.google.com/home/dashboard?project=yakiniku-finder&hl=ja
 
  <script async src="https://maps.googleapis.com/maps/api/js?key=[作成したAPIキー]"></script>
 
-ファイル名：.env
 
-中身：REACT_APP_API_KEY="[作成したAPIキー]&libraries=places"
-
-
-4. 起動
+8. 起動
 
 npm start
 
