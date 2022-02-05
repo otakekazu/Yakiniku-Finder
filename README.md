@@ -3,7 +3,6 @@
 ## 使用方法
 ### 前提条件
 ・[Node.jsインストール済み](https://nodejs.org/ja/download/)
-・
 
 ### 準備
 
