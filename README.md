@@ -32,12 +32,17 @@ npm i
 6. APIキーを作成
 
 
-7. Yakiniku-Finder/client/public/index.html 11行目にAPIキーを追記
+7. ファイルを作成
 ```
- <script async src="https://maps.googleapis.com/maps/api/js?key=[作成したAPIキー]"></script>
+Yakiniku-Finder/client/.env.development.local
 ```
 
-8. 起動
+8. 作成したファイルにAPIキーを記述
+```
+REACT_APP_API_KEY="「開発環境用のAPIキー]"
+```
+
+9. 起動
 ```
 npm start
 ```
@@ -47,6 +52,7 @@ npm start
 - 任意の場所をクリックすることで周辺の焼肉屋を検索できます。
 - 最大で20件まで表示されます。
 - 近くに焼肉屋が存在しない場合はアラートが表示されます。
+- お店を検索中はマップの操作はできません。
 
 ## 使用技術
 - Javascript
