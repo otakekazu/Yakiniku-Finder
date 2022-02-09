@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 import "./Main.scss";
 import { searchRestaurant } from "./Hooks";
@@ -16,6 +16,10 @@ function Main() {
     width: "1000px",
     height: "500px",
   };
+
+  useEffect(() => {
+    map && map.panTo(center);
+  }, [center]);
 
   const onClick = (e) => {
     if (!e.placeId) {
@@ -39,7 +43,6 @@ function Main() {
             setIsLoading(false);
           }}
           onClick={onClick}
-          disableDefaultUI={false}
         >
           {Object.keys(mark).map((key) => {
             return (

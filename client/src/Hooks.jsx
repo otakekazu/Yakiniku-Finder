@@ -9,8 +9,8 @@ export const searchRestaurant = (e, map, setCenter, setMark, setIsLoading) => {
   };
   setCenter({
     lat: slctPlace.lat(),
-    lng: slctPlace.lng(),
-  });
+    lng: slctPlace.lng()
+  })
   service.nearbySearch(request, (results, status) => {
     if (status == "OK") {
       setMark(results);
