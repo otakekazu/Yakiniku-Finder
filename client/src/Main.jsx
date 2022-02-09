@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { LoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 import "./Main.scss";
+import { searchRestaurant } from "./Hooks";
 
 function Main() {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,35 +18,15 @@ function Main() {
   };
 
   const onClick = (e) => {
-    setIsLoading(true);
-    let service = new window.google.maps.places.PlacesService(map);
-    let slctPlace = new window.google.maps.LatLng(
-      e.latLng.lat(),
-      e.latLng.lng()
-    );
-    let request = {
-      location: slctPlace,
-      radius: "500",
-      type: ["restaurant"],
-      keyword: "yakiniku",
-    };
-    setCenter({
-      lat: slctPlace.lat(),
-      lng: slctPlace.lng(),
-    });
-    service.nearbySearch(request, (results, status) => {
-      if (status == "OK") {
-        setMark(results);
-      } else {
-        alert("近くに焼肉屋はありません。");
-      }
-      setIsLoading(false)
-    });
+    if (!e.placeId) {
+      setIsLoading(true);
+      searchRestaurant(e, map, setCenter, setMark, setIsLoading);
+    }
   };
 
   return (
     <LoadScript
-      googleMapsApiKey={process.env.REACT_APP_API_KEY}
+      googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
       libraries={["places"]}
     >
       <div className={isLoading ? "isLoading" : ""}>

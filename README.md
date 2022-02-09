@@ -39,7 +39,7 @@ Yakiniku-Finder/client/.env.development.local
 
 8. 作成したファイルにAPIキーを記述
 ```
-REACT_APP_API_KEY="「開発環境用のAPIキー]"
+REACT_APP_GOOGLE_MAP_API_KEY="「開発環境用のAPIキー]"
 ```
 
 9. 起動
