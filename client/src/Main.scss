@@ -1,6 +1,26 @@
-.isLoading{
+.isLoading {
   cursor: not-allowed;
-  div{
+  div {
     pointer-events: none;
+  }
+}
+
+.balloon {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  .restaurantInfo {
+    font-size: 10px;
+    a {
+      font-size: 14px;
+    }
+  }
+  .restaurantPhotos {
+    display: flex;
+    justify-content: center;
+    img {
+      max-width: 300px;
+      max-height: 200px;
+    }
   }
 }

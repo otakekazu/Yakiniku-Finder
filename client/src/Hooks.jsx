@@ -18,6 +18,20 @@ const useMap = () => {
     map && setService(new window.google.maps.places.PlacesService(map));
   }, [map]);
 
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setCenter({
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }, []);
+
   const searchRestaurant = (e) => {
     setIsLoading(true);
     let slctPlace = new window.google.maps.LatLng(
