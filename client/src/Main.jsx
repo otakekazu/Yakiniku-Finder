@@ -10,13 +10,28 @@ import useMap from "./Hooks";
 
 function Main() {
   const [activeMarker, setActiveMarker] = useState();
-  const [setMap, center, isLoading, setIsLoading, marks, searchRestaurant] =
-    useMap();
+  
+  const [
+    setMap,
+    center,
+    isLoading,
+    setIsLoading,
+    marks,
+    setSearchWord,
+    searchRestaurant,
+  ] = useMap();
 
   const mapStyle = {
     width: "1000px",
     height: "500px",
   };
+
+  const restaurantDatas = [
+    { label: "焼肉屋", value: "yakiniku" },
+    { label: "ラーメン屋", value: "ramen" },
+    { label: "中華料理屋", value: "chainese food" },
+    { label: "ケバブ屋", value: "kebab" },
+  ];
 
   const mapOnClick = (e) => {
     if (!e.placeId) {
@@ -36,6 +51,36 @@ function Main() {
       googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
       libraries={["places"]}
     >
+      <div className={"slctCategory"}>
+        <select
+          name="restaurantCategory"
+          onChange={(e) =>
+            setSearchWord(
+              e.nativeEvent.target.value != "all"
+                ? {
+                    type: "single",
+                    data: {
+                      label:
+                        e.nativeEvent.target[e.nativeEvent.target.selectedIndex]
+                          .text,
+                      value: e.nativeEvent.target.value,
+                    },
+                  }
+                : {
+                    type: "multiple",
+                    data: restaurantDatas,
+                  }
+            )
+          }
+        >
+          {restaurantDatas.map((restaurantData) => (
+            <option value={restaurantData.value} key={restaurantData.value}>
+              {restaurantData.label}
+            </option>
+          ))}
+          <option value={"all"} key={"all"}>一括表示</option>
+        </select>
+      </div>
       <div className={isLoading ? "isLoading" : ""}>
         <GoogleMap
           mapContainerStyle={mapStyle}
