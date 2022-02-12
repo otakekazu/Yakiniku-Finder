@@ -7,10 +7,11 @@ import {
 } from "@react-google-maps/api";
 import "./Main.scss";
 import useMap from "./Hooks";
+import RestaurantMarker from "./RestaurantMarker";
 
 function Main() {
   const [activeMarker, setActiveMarker] = useState();
-  
+
   const [
     setMap,
     center,
@@ -33,17 +34,10 @@ function Main() {
     { label: "ケバブ屋", value: "kebab" },
   ];
 
-  const mapOnClick = (e) => {
+  const onClickMap = (e) => {
     if (!e.placeId) {
       searchRestaurant(e);
     }
-  };
-
-  const markerOnClick = (placeId) => {
-    if (placeId === activeMarker) {
-      return;
-    }
-    setActiveMarker(placeId);
   };
 
   return (
@@ -78,7 +72,9 @@ function Main() {
               {restaurantData.label}
             </option>
           ))}
-          <option value={"all"} key={"all"}>一括表示</option>
+          <option value={"all"} key={"all"}>
+            一括表示
+          </option>
         </select>
       </div>
       <div className={isLoading ? "isLoading" : ""}>
@@ -90,54 +86,10 @@ function Main() {
             setMap(map);
             setIsLoading(false);
           }}
-          onClick={mapOnClick}
+          onClick={onClickMap}
         >
           {Object.keys(marks).map((key) => {
-            return (
-              <Marker
-                key={key}
-                position={{
-                  lat: marks[key].geometry.location.lat(),
-                  lng: marks[key].geometry.location.lng(),
-                }}
-                label={marks[key].name}
-                onClick={() => markerOnClick(marks[key].place_id)}
-              >
-                {marks[key].place_id === activeMarker ? (
-                  <InfoWindow
-                    position={{
-                      lat: marks[key].geometry.location.lat(),
-                      lng: marks[key].geometry.location.lng(),
-                    }}
-                    onCloseClick={() => setActiveMarker(null)}
-                  >
-                    <div className={"balloon"}>
-                      <div className={"restaurantInfo"}>
-                        <h1>{marks[key].name}</h1>
-                        <h3>住所：{marks[key].vicinity}</h3>
-                        <h3>評価：{marks[key].rating}</h3>
-                        <a
-                          href={
-                            "https://www.google.com/search?q=" +
-                            marks[key].name +
-                            "+" +
-                            marks[key].plus_code.compound_code
-                              .split(" ")[1]
-                              .replace("、", " ")
-                          }
-                          target={"_blank"}
-                        >
-                          Googleで店名を検索
-                        </a>
-                      </div>
-                      <div className={"restaurantPhotos"}>
-                        <img src={marks[key].photos[0].getUrl()} alt={""} />
-                      </div>
-                    </div>
-                  </InfoWindow>
-                ) : null}
-              </Marker>
-            );
+            return <RestaurantMarker key={key} value={marks[key]} />;
           })}
         </GoogleMap>
       </div>
